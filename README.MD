@@ -83,14 +83,14 @@ output.message() // "Baz is null"
 
 Right now there are just a couple of methods that can be used
 
-## and(() -> nextValue, <message>)
+## and(() -> nextValue, [message])
 Add another value to the composition, and an optional message to add if the value is null.
 ```
 Optionals1<String> a = Optionals.of(() -> "foo")
 Optionals2<String, String> b = a.and(() -> "bar")
 ```
 
-## andThen((lastElementValue) -> nextValue, <message>)
+## andThen((lastElementValue) -> nextValue, [message])
 Add another value to the composition, using the last value that we had.
 This is very useful since optional-object compositions are typically
 created using a cascade where each element depends on the previous one.
@@ -100,7 +100,7 @@ Optionals3<S, S, S>    b = a.and((bar) -> bar + "baz")
 Optionals4<S, S, S, S> c = b.and((barbaz) -> barbaz + blin)
 ```
 
-## andThenOf((value1, value2... valueN) -> nextValue, <message>)
+## andThenOf((value1, value2... valueN) -> nextValue, [message])
 This adds another value to the composition, similarly to `andThen`, however
 any/all of the currently elements in the composition can be used to create
 the next element.
@@ -109,7 +109,7 @@ Optionals2<S, S>    a = Optionals.of(() -> "foo", () -> "bar")
 Optionals3<S, S, S> b = a.and((foo, bar) -> foo + bar)
 ```
 
-## andThenOf((value1, value2... valueN) -> newSingleValue, <message>)
+## andThenOf((value1, value2... valueN) -> newSingleValue, [message])
 This allows mapping any/all elements of the current composition
 into a single new composition.
 ```
