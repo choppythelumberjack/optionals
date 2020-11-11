@@ -134,6 +134,21 @@ public class Optionals {
       return new Optionals.Optionals${o+1}<>(<@values num=o />, newValue, defined, newMessage);
     }
 
+    public <R> Optionals1<R> thenOf(FromLastValue<T${o}, R> next) { return thenOf(next, null); }
+    public <R> Optionals1<R> thenOf(FromLastValue<T${o}, R> next, String message) {
+      boolean defined = this.defined;
+      String newMessage = this.message;
+      R newValue = null;
+      // If we are previously defined, try to get the next value
+      if (defined) try { newValue = next.makeNext(value${o}); } catch (NullPointerException ignored) { }
+      // If we have previously been defined and the new value is null set the newly undefined settings
+      if (newValue == null && defined) {
+        newMessage = message;
+        defined = false;
+      }
+      return new Optionals.Optionals1<>(newValue, defined, newMessage);
+    }
+
     public <R> Optionals1<R> then(FromAllValues${o}<<@Ts num=o />, R> next) { return then(next, null); }
     public <R> Optionals1<R> then(FromAllValues${o}<<@Ts num=o />, R> next, String message) {
       boolean defined = this.defined;
